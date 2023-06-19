@@ -6,6 +6,7 @@
 ##           of reads supporting the alternative allele
 ## group: a vector of treatment group indicators of the samples
 ## samples: a vector of sample names
+## Copyright (2023) University of Kentucky.
 load("inputdata.RData") 
 
 ## Load the function for performing cell line mixture deconvolution
@@ -116,36 +117,6 @@ ggplot(data=dt2, aes(x=X, y=value, fill=variable)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1,size = 14),plot.margin = unit(c(0,0,0,0), "cm"),
         legend.title = element_text(size=14),legend.text = element_text(size=14),legend.key.height = unit(0.4,'cm'))+
   guides(fill= guide_legend(nrow = 1))
-
-##figure D - heatmap 
-estidata<-estiresult$esti_inhibition*359500/450000
-temp = matrix(estidata, ncol=1)
-estiratio<-1/ (temp %*% t(1/temp))
-temp = matrix(realdata, ncol=1)
-realratio<-1/ (temp %*% t(1/temp))
-combineratio<-estiratio
-combineratio[upper.tri(combineratio)]<-t(realratio)[upper.tri(realratio)]
-rownames(combineratio) = celllines
-colnames(combineratio) = celllines
-
-
-makeColorRampPalette <- function(colors, cutoff.fraction, num.colors.in.palette)
-{
-  stopifnot(length(colors) == 4)
-  ramp1 <- colorRampPalette(c("red", "black"))(num.colors.in.palette * cutoff.fraction)
-  ramp2 <- colorRampPalette(c("black", "green"))(num.colors.in.palette * (1 - cutoff.fraction))
-  return(c(ramp1, ramp2))
-}
-
-cutoff.distance <- 0.5 
-cols <- makeColorRampPalette(c("black", "red",    # distances 0 to 3 colored from white to red
-                               "darkgreen", "white"), # distances 3 to max(distmat) colored from green to black
-                             0.5,
-                             100)
-
-pheatmap(combineratio,cluster_rows = F,cluster_cols = F,fontsize = 7,
-         breaks = seq(0.6,1.4,length.out = 100)
-         ,fontsize_col = 12,fontsize_row = 12,color = cols)
 
 ############################################## End of fig4  ############################################
 
@@ -418,7 +389,7 @@ ggplot()+
   geom_point(data=myratio3,mapping = aes(x=factor(group,levels = c("100","200","400","800","1000","1500")),
                                          y=cv,colour=cellline),size=2)+
   ylim(0,0.32)+
-  ggtitle("Ratio of viable cells")+
+  ggtitle("Ratio of cell counts")+
   theme(plot.title = element_text(hjust = 0.5,size = 20,face = "bold"),legend.position = "none",axis.text=element_text(size=15,face="bold"),
         axis.title=element_text(size=17,face="bold"))+
   scale_x_discrete()+
@@ -435,7 +406,7 @@ library(ggplot2)
 dt = read.csv("plot of NCI60_0109.csv",stringsAsFactors = F)
 ggplot(dt,aes(x=esti,y=true,color=cancertype)) + geom_point(size=.5) +
   geom_errorbar(aes(ymin=(true-sd), ymax=true+sd), width=.02,size=.3,position=position_dodge(.9)) +
-  labs(x = "Estimated Ratio of vialbe cells", y = "True Ratio of vialbe cells",color= "Cell line type") + theme_classic()
+  labs(x = "Estimated Ratio of cell counts", y = "True Ratio of cell counts",color= "Cell line type") + theme_classic()
 ############################################# End of Figure 6 ###########################################
 
 
