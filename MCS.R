@@ -1,4 +1,4 @@
-##01/06/2022:change line 89 "result[[2]]"
+## Copyright (2023) University of Kentucky.
 
 source("deconvolute.R")
 MCS <- function(data){
