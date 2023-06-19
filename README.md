@@ -1,1 +1,1 @@
-The main.R file contains R scripts for reproducing Figures 4-6. It also indicates the use of all other files. Copyright (2023) University of Kentucky.
+The main.R file contains R scripts for reproducing Figures 4-6 of the paper entitled "Genomic screening methodology not requiring barcoding:  Single nucleotide polymorphism-based, mixed-cell screening (SMICS)." It also indicates the use of all other files. Copyright (2023) University of Kentucky.
