@@ -1,3 +1,4 @@
+## This code implements the cell-line mixture deconvolution (CLMD) algorithm.
 ## Copyright (2023) University of Kentucky.
 
 source("deconvolute.R")
